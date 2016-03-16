@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Shop>
+    <Costs>
+        <Health>100</Health>
+        <AddedCoins>100</AddedCoins>
+        <Speed>100</Speed>
+    </Costs>
+</Shop>

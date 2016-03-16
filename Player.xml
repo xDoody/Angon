@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Player>
+	<Stats>
+		<Health>100</Health>
+		<AditionalCoins>1</AditionalCoins>
+		<Speed>0.5</Speed>
+	</Stats>
+</Player>
