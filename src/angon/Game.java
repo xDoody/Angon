@@ -10,6 +10,8 @@ import angon.GameObjects.Player;
 import angon.GameObjects.ID;
 import angon.GameObjects.GameObject;
 import angon.GameObjects.MidEnemy;
+import angon.Shop.Shop;
+import angon.Shop.ShopReader;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -26,7 +28,7 @@ public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
     public static int WIDTH=620;
     public static int HEIGHT=430;
-    public Logger log;
+    public Logger log= new Logger();
     public long gameTimes=0,gameTimeh,gameTimem;
     public Handler handler;
     private final Random r=new Random();
@@ -38,12 +40,13 @@ public class Game extends Canvas implements Runnable {
     private Thread thread;
     private Spawn spawner;
     public Timer timer;
-    public readCoins rc= new readCoins(hud);;
+    public readCoins rc= new readCoins(hud);
+    public ShopReader sr= new ShopReader();
+    public PlayerStats ps= new PlayerStats(hud,log);
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Game">
     public Game() throws IOException
     {
-        log = new Logger();
         new Display(WIDTH,HEIGHT,this);
         log.print("Display created.");
         handler = new Handler();
@@ -54,12 +57,12 @@ public class Game extends Canvas implements Runnable {
         log.print("HUD created.");
         spawner=new Spawn(handler,hud,timer,log);
         log.print("Spawner created.");
-        this.addKeyListener(new KeyImput(handler));
+        this.addKeyListener(new KeyImput(handler,ps.getSpeed()));
         log.print("KeyImput initated.");
-        handler.addObject(new Player(100,100,ID.Player,handler));
+        handler.addObject(new Player(100,100,ID.Player,handler,ps.getAditionalCoins()));
         log.print("Player added.");
-        int k=r.nextInt(400-2)+2;
-        int k1=r.nextInt(440-2)+2;
+        int k=r.nextInt(550) + 1;
+        int k1=r.nextInt(400) + 1;
         handler.addObject(new BasicEnemy(k,k1,ID.BasicEnemy,handler));
         log.print("BasicEnemy added at:"+k+","+k1+".");
         handler.addObject(new MidEnemy(k,k1,ID.MidEnemy,handler));
@@ -131,7 +134,7 @@ public class Game extends Canvas implements Runnable {
     }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Clamps">
-    public static int clamp(int var,int min,int max){
+    public static float clamp(float var,float min,float max){
         if(var>=max)
             return var=max;
         else if(var<=min)
@@ -139,7 +142,7 @@ public class Game extends Canvas implements Runnable {
         else
             return var;
     }
-    public static float HealthClamp(float var,int min,int max)
+    public static float HealthClamp(float var,float min,float max)
     {
         if(var>=max)
             return var=max;
@@ -156,6 +159,9 @@ public class Game extends Canvas implements Runnable {
     {
         rc.onClose();
         f=false;
+        hud.COINS=0;
+        rc.onOpen();
+        new Shop(ps.getSpeed(),ps.getHealth(),ps.getAditionalCoins(),ps);
     }
     handler.tick();
     hud.tick();

@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class HUD{
     public static float HEALTH =100;
-    public int TOTALCOINS = 0;
+    public static int TOTALCOINS = 0;
     public static int COINS=0;
     public static int Level=1;
     private int greenValue=255;
@@ -28,7 +28,7 @@ public class HUD{
     {
     HEALTH=Game.HealthClamp(HEALTH, 0, 100);
     
-    greenValue=Game.clamp(greenValue,0,255);
+    greenValue=(int) Game.clamp(greenValue,0,255);
     
     greenValue=(int) (HEALTH*2+55);
 

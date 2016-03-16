@@ -24,9 +24,11 @@ public class Player extends GameObject{
     Handler handler;
     ImageObserver io;
     readCoins rc;
-    public Player(int x, int y, ID id,Handler handler) throws IOException{
+    int AdCoin;
+    public Player(float x, float y, ID id,Handler handler,int AdCoin) throws IOException{
         super(x, y, id);
         this.handler=handler;
+        this.AdCoin=AdCoin;
     }
     @Override
     public void tick() {
@@ -46,7 +48,7 @@ public class Player extends GameObject{
             {
                 if(getBounds().intersects(tempObject.getBounds()))
                 {
-                HUD.HEALTH-=0.2;
+                HUD.HEALTH-=1;
                 
                 }
             }
@@ -54,7 +56,7 @@ public class Player extends GameObject{
             {
                 if(getBounds().intersects(tempObject.getBounds()))
                 {
-                HUD.COINS++;
+                HUD.COINS+=1+AdCoin;
                 handler.removeObject(tempObject);
                 }
             }
@@ -62,7 +64,15 @@ public class Player extends GameObject{
             {
                 if(getBounds().intersects(tempObject.getBounds()))
                 {
-                HUD.HEALTH-=0.3;
+                HUD.HEALTH-=0.1;
+                }
+            }
+            else if(tempObject.getId()==ID.SuperCoin)
+            {
+                if(getBounds().intersects(tempObject.getBounds()))
+                {
+                HUD.COINS+=5+AdCoin;
+                handler.removeObject(tempObject);
                 }
             }
         }
@@ -71,13 +81,13 @@ public class Player extends GameObject{
     public void render(Graphics g) {
         
         g.setColor(new Color(32,43,63));
-        g.fill3DRect(x,y,32,32,true);
+        g.fill3DRect((int)x,(int)y,32,32,true);
       
 }
 
     @Override
     public Rectangle getBounds() {
-       return new Rectangle(x,y,32,32);
+       return new Rectangle((int)x,(int)y,32,32);
     }
 
 

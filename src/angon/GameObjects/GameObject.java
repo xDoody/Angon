@@ -14,10 +14,10 @@ import java.awt.Rectangle;
  */
 public abstract class GameObject {
     
-    protected int x,y;
+    protected float x,y;
     protected ID id;
     protected float velX,velY;
-    public GameObject(int x,int y,ID id)
+    public GameObject(float x,float y,ID id)
     {
         this.x=x;
         this.y=y;
@@ -28,19 +28,19 @@ public abstract class GameObject {
     public abstract Rectangle getBounds();
     //<editor-fold defaultstate="collapsed" desc="Set/Get">
     
-    public void setX(int x)
+    public void setX(float x)
     {
         this.x=x;
     }
-    public void setY(int x)
+    public void setY(float y)
     {
-        this.x=x;
+        this.y=y;
     }
-    public int getX()
+    public float getX()
     {
         return x;
     }
-    public int getY()
+    public float getY()
     {
         return y;
     }
@@ -52,19 +52,19 @@ public abstract class GameObject {
     {
         return id;
     }
-    public void setVelX(int velX)
+    public void setVelX(float velX)
     {
      this.velX=velX;
     }
-    public void setVelY(int velY)
+    public void setVelY(float velY)
     {
      this.velY=velY;
     }
-    public int getVelX(int velX)
+    public float getVelX(float velX)
     {
     return velX;
     }
-    public int getVelY(int velY)
+    public float getVelY(float velY)
     {
     return velY;
     }

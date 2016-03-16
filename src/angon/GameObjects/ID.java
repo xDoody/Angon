@@ -13,6 +13,7 @@ public enum ID {
     Player(),
     Trail(),
     Coin(),
+    SuperCoin(),
     BasicEnemy(),
     MidEnemy(),
     HardEnemy(),

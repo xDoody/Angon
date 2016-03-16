@@ -7,6 +7,7 @@ package angon;
 
 import angon.GameObjects.Coin;
 import angon.GameObjects.ID;
+import angon.GameObjects.SuperCoin;
 import java.util.Random;
 
 /**
@@ -23,6 +24,7 @@ public class Spawn {
     private Logger log;
     private final boolean k=true;
     private int tickCount=0;
+    private int tCount=0;
     Level level;
     public Spawn(Handler handler,HUD hud,Timer timer,Logger log)
     {
@@ -39,6 +41,7 @@ public class Spawn {
     {   
     //<editor-fold defaultstate="collapsed" desc="CoinSpawn">
         tickCount++;
+        tCount++;
         if(tickCount==1200/leveldif)
         {
             x=r.nextInt(550) + 1;
@@ -48,7 +51,12 @@ public class Spawn {
         }
         if(timerNow()+1==timer.getSecodns())
         tickCount=0;
-        
+        if(tCount==600*20){
+            x=r.nextInt(400-2) + 2;
+            y=r.nextInt(440-2) + 2;
+            handler.addObject(new SuperCoin(x,y,ID.SuperCoin,handler,log));
+            tCount=0;
+        }
 //</editor-fold>
     level.tick();
     }
