@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package angon;
-
 import angon.GameObjects.BasicEnemy;
 import angon.GameObjects.Player;
 import angon.GameObjects.ID;
@@ -18,8 +12,19 @@ import java.awt.image.BufferStrategy;
 import java.io.IOException;
 import java.util.Random;
 /**
- *
+ *~Already did the comments
  * @author Deyu
+ * 
+ * 
+ * Make a new class for Declarations so you can close it and remake new ones easier
+ * newGame: -dispose the graphics
+ *          -gc the display instance and all the instances beside this one
+ *          -make new instances
+ *          -redisplay the graphics
+ * 
+ * 
+ * 
+ * 
  * 
  */
 
@@ -73,25 +78,31 @@ public class Game extends Canvas implements Runnable {
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Set">
     public void setc(){
+        //Load the coins from the file
         hud.TOTALCOINS=rc.getCoins();
     }
     public void setk(boolean l)
     {
+        //for new game purposes , it will set the current status of the game
+        //true = need new game
         k=l;
     }
     public boolean getk()
     {
+        //returns the k variable
         return k;
     }
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Start/Stop">
     public synchronized void  start(){
+        //Start a thread and make the running boolean true to start the game loop
         thread = new Thread(this);
         thread.start();
         running=true;
     }
     public synchronized void stop(){
         try{
+            //join the thread to stop and set the running boolean false to stop the game loop
             thread.join();
             running=false;
         }
@@ -100,6 +111,7 @@ public class Game extends Canvas implements Runnable {
         }
     }
     public void run(){
+        //game loop
             long lastTime=System.nanoTime();
             double amountOfTicks=60.0;
             double ns=100000000/amountOfTicks;
@@ -142,15 +154,22 @@ public class Game extends Canvas implements Runnable {
 //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Clamps">
     public static float clamp(float var,float min,float max){
+        /**
+         *Clamp method so it will not overflow / underflow
+         **/
         if(var>=max)
+            //if the variable is max or higher then max , return max
             return var=max;
         else if(var<=min)
+            //if the variable is min or lower then min , return min
             return var=min;
         else
+            //if none of the above are true , do nothing
             return var;
     }
     public static float HealthClamp(float var,float min,float max)
     {
+        //same as above just it's for Health specific
         if(var>=max)
             return var=max;
         else if(var<=min)
@@ -162,34 +181,49 @@ public class Game extends Canvas implements Runnable {
     //<editor-fold defaultstate="collapsed" desc="Render/Tick">
     private void tick()
     {
-    if(hud.HEALTH==0 && f==true)
-    {
-        rc.onClose();
-        f=false;
-        hud.COINS=0;
-        rc.onOpen();
-        new Shop(ps.getSpeed(),ps.getHealth(),ps.getAditionalCoins(),ps,hud,this);
-        System.gc();
-    }
-    handler.tick();
-    hud.tick();
-    spawner.tick();
+        //check if the player has 0 hp
+        if(hud.HEALTH==0 && f==true)
+        {
+            //if true , then save the coins to file
+            rc.onClose();
+            //set the boolean to false to avoid repetition
+            f=false;
+            //set the displayed coins to 0
+            hud.COINS=0;
+            //read coins from file
+            rc.onOpen();
+            //open the shop window
+            new Shop(ps.getSpeed(),ps.getHealth(),ps.getAditionalCoins(),ps,hud,this);
+            //gc whatever it can
+            System.gc();
+        }
+        //tick the game
+        handler.tick();
+        hud.tick();
+        spawner.tick();
     }
     private void render()
     {
         BufferStrategy bs = this.getBufferStrategy();
         if(bs==null)
         {
+            //if the bufferstrategy is new , make a new one
             this.createBufferStrategy(3);
             return;
         }
+        //initialize graphics
         Graphics g = bs.getDrawGraphics();
+        //set the background color to black
         g.setColor(Color.black);
+        //fill the background
         g.fillRect(0, 0, WIDTH, HEIGHT);
-        
+        //render the gameobjects
         handler.render(g);
+        //render the hud
         hud.render(g);
+        //dispose the graphics
         g.dispose();
+        //paint the graphis
         bs.show();
     }
 //</editor-fold>

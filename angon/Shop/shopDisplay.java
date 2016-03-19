@@ -28,6 +28,7 @@ public class shopDisplay extends JFrame {
     JFrame frame;
     
     //<editor-fold defaultstate="collapsed" desc="Buttons">
+    //Initialize the buttons
     JButton HButton = new JButton("Buy");
     JButton ACButton= new JButton("Buy");
     JButton SButton = new JButton("Buy");
@@ -36,6 +37,7 @@ public class shopDisplay extends JFrame {
     
     public shopDisplay
         (
+            //get everything you need thru here 
             int width , int height,
             int HPrice,int SPrice,int ACPrice,
             ShopPrices sp,ShopReader sr,PlayerStats ps,
@@ -43,15 +45,19 @@ public class shopDisplay extends JFrame {
             float Speed,int Health,int Coins,Game game
         )
     {
+        //Class variables = new values;
         this.hud=hud;
         this.sp=sp;
         this.sr=sr;
         //<editor-fold defaultstate="collapsed" desc="ActionListeners">
+        //add ActionListeners to Every Button
         newGame.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent ae)
         {
+            //set the k boolean from inside the Game class to true to make a newGame
             game.setk(true);
+            //displose of the shopDisplay
             frame.dispose();
         }
          });
